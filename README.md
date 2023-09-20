@@ -10,6 +10,8 @@ Tämä ei ole Ansible- tai Docker-opetusohjelma (vaikka selitän joitain perusk�
 ## Ansible
 Ansible on IT-automaatiojärjestelmä. Se käsittelee kokoonpanon hallintaa, sovellusten käyttöönottoa, pilvien tarjoamista, tapauskohtaista tehtävien suorittamista ja moniodista orkestrointia - mukaan lukien trivialisoivat asiat, kuten ns. zero downtime rolling updates with load balancers. Voit lukea lisää osoitteesta [www.ansible.com](https://www.ansible.com/)
 
+Ansible getting started ohje löytyy [täältä](https://docs.ansible.com/ansible/latest/getting_started/index.html)
+
 ## Docker
 Docker on maailman johtava ohjelmistokonttialusta. Kehittäjät käyttävät Dockeria "toimii minun ympäristössäni" -ongelmien poistamiseksi. Operaattorit käyttävät Dockeria ohjaamaan ja hallitsemaan sovelluksia vierekkäin eristetyissä ajoympäristöissä (isolated containers) paremman laskentatiheyden saamiseksi. Yritykset käyttävät Dockeria rakentaakseen ketteriä ohjelmistojen toimitusputkia uusien  ominaisuudet nopeampaan, turvallisempaan ja luotettavaan tuottamiseen molemmille Linuxille sekä Windows Server ja Linux-on-mainframe-sovelluksille. Voit lukea lisää osoitteesta [www.docker.com](https://www.docker.com/)
 
@@ -71,6 +73,16 @@ Esimerkkinä tästä on php asennus [playbook](./ansible_lab/master/ansible/inst
 
 `ansible-playbook -i inventory install_php.yml`
 
+Asennetaan [Nginx](https://www.nginx.org/) palvelin nginx ryhmälle:
+
+Esimerkki asentaa nginx palvelimen hosteille 04 ja 05, ottaa käyttöön kustomoidun webbisivuston ja siellä index.html sisällön.
+
+Ajetaan playbook [install_nginx.yml](./ansible_lab/master/ansible/install_nginx.yml):
+
+`ansible-playbook -i inventory install_nginx.yml`
+
+Playbook suorittaa 
+
 ## Labran päättäminen
 
 Kun olet saanut labran tehtyä, tai haluat aloittaa alusta, voi ympäristön tuhota seuraavilla komennoilla:
@@ -94,3 +106,4 @@ Tallennussijainin, volumen poistaminen:
 Ja jos tahdot poistaa Docker kuvat (imaget), joskin tämä ei ole tarpeellista labran käynnistämiksi 'puhtaana':
 
 `docker rmi ansible_host ansible_master ansible_base`
+
