@@ -1,11 +1,11 @@
 # Ansible_training - Intro
 
-Tämän oppaan tarkoituksena on asettaa [Ansible](https://www.ansible.com/)-koulutusympäristö [Docker](https://www.docker.com/)-konttien avulla. Tämän oppaan päätyttyä sinulla on Docker-pääkontti, joka voi hallita kolmea isäntäkonttia (voit helposti laajentaa hallittujen isäntien määrää tarpeitasi vastaavaksi).
+Tämän labran tarkoituksena on asettaa [Ansible](https://www.ansible.com/)-koulutusympäristö [Docker](https://www.docker.com/)-konttien avulla. Tämän labran päätyttyä sinulla on Docker-pääkontti, joka voi hallita viittä isäntäkonttia (voit helposti laajentaa hallittujen isäntien määrää tarpeitasi vastaavaksi).
 
 Miksi Docker kontteja perinteisen virtualisoinnin, kuten [VirtualBoxin](https://www.virtualbox.org), sijasta? Docker kontit kuluttavat paljon vähemmän resursseja, joten voit rakentaa suurempia testiympäristöjä kannettavalle tietokoneellesi. Docker-säilön käynnistäminen / sammuttaminen on paljon nopeampaa kuin tavallisen virtuaalikoneen, joka mahdollistaa nopean uudelleenkäynnistys tapahtuman asetuksien muutoksen yhteydessä. Käytin [Docker Compose](https://docs.docker.com/compose/overview/) -sovellusta laboratorion asennuksen automatisoimiseksi jotta ympäristössä kutakin säiliötä ei tarvitse muodostaa erikseen. 
 Tämä ei ole Ansible- tai Docker-opetusohjelma (vaikka selitän joitain peruskäsitteitä). Tarkoituksena on yksinomaan laboratorioympäristön asettaminen, jotta kokeet voidaan tehdä paikallisella koneella.
 
-**TÄRKEÄÄ**: Tämän oppaan seuraamiseksi sinun on asennettava Docker CE (Community Edition) ympäristöösi. Asennus on dokumentoitu hyvin [Docker käyttööotto oppaassa](https://docs.docker.com/engine/installation/#supported-platforms), eikä näin ole oleellinen tämän työn ohjeeksi. Lyhyt kuvaus Ansible ja Docker ympäristöistä :
+**TÄRKEÄÄ**: Tämän labran seuraamiseksi sinun on asennettava Docker CE (Community Edition) ympäristöösi. Asennus on dokumentoitu hyvin [Docker käyttööotto oppaassa](https://docs.docker.com/engine/installation/#supported-platforms), eikä näin ole oleellinen tämän työn ohjeeksi. Lyhyt kuvaus Ansible ja Docker ympäristöistä :
 
 ## Ansible
 Ansible on IT-automaatiojärjestelmä. Se käsittelee kokoonpanon hallintaa, sovellusten käyttöönottoa, pilvien tarjoamista, tapauskohtaista tehtävien suorittamista ja moniodista orkestrointia - mukaan lukien trivialisoivat asiat, kuten ns. zero downtime rolling updates with load balancers. Voit lukea lisää osoitteesta [www.ansible.com](https://www.ansible.com/)
@@ -71,3 +71,26 @@ Esimerkkinä tästä on php asennus [playbook](./ansible_lab/master/ansible/inst
 
 `ansible-playbook -i inventory install_php.yml`
 
+## Labran päättäminen
+
+Kun olet saanut labran tehtyä, tai haluat aloittaa alusta, voi ympäristön tuhota seuraavilla komennoilla:
+
+Konttien pysäyttäminen:
+
+`docker compose kill`
+
+Voi myös hallitusti ajaa alas ympäristön käyttämällä:
+
+`docker compose down`
+
+Konttien poistaminen järjestelmästä:
+
+`docker compose rm`
+
+Tallennussijainin, volumen poistaminen:
+
+`docker volume rm ansible_lab_ansible_vol`
+
+Ja jos tahdot poistaa Docker kuvat (imaget), joskin tämä ei ole tarpeellista labran käynnistämiksi 'puhtaana':
+
+`docker rmi ansible_host ansible_master ansible_base`
