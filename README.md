@@ -115,6 +115,8 @@ Voi myös hallitusti ajaa alas ympäristön käyttämällä:
 
 `docker compose down`
 
+Ajamalla `down` käskyn, docker hallinta pysäyttää ja poistaa docker compose tiedoston määrittelemät kontit ja verkot. Edelleen koneelle jäävät luodut imaget ja volumet.
+
 Konttien poistaminen järjestelmästä:
 
 `docker compose rm`
