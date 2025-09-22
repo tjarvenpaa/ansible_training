@@ -1,0 +1,8 @@
+# Ignore teht directory
+teht/
+
+# Common files to ignore
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
