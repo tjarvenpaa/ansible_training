@@ -1,0 +1,43 @@
+---
+- name: Asenna Apache HTTP -palvelin
+  hosts: all
+  become: true
+  gather_facts: true
+
+  vars:
+    apache_pkg_map:
+      Debian: apache2
+      Ubuntu: apache2
+      RedHat: httpd
+      CentOS: httpd
+      Rocky: httpd
+      AlmaLinux: httpd
+      Amazon: httpd
+      Fedora: httpd
+    apache_svc_map:
+      Debian: apache2
+      Ubuntu: apache2
+      RedHat: httpd
+      CentOS: httpd
+      Rocky: httpd
+      AlmaLinux: httpd
+      Amazon: httpd
+      Fedora: httpd
+
+  tasks:
+    - name: Päivitä pakettivarastot (Debian/Ubuntu)
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Asenna Apache-palvelin
+      ansible.builtin.package:
+        name: "{{ apache_pkg_map[ansible_facts['distribution']] | default(apache_pkg_map[ansible_facts['os_family']]) }}"
+        state: present
+
+    - name: Varmista, että Apache on käynnissä ja käynnistyy automaattisesti
+      ansible.builtin.service:
+        name: "{{ apache_svc_map[ansible_facts['distribution']] | default(apache_svc_map[ansible_facts['os_family']]) }}"
+        state: started
+        enabled: true

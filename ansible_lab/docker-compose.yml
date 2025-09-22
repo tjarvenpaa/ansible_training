@@ -1,22 +1,18 @@
-name: ansible_lab
+#version: '3.8'
+
+name: ansible_lab 
 services:
-  base:
-    build: ./base/
-    image: ansible_base
   master:
-    links:
-      - base
     build: ./master/
     image: ansible_master
     container_name: master01
     hostname: master01
-    command: ["/usr/sbin/sshd","-D"]
+    command: ["/usr/sbin/sshd", "-D"]
     volumes:
-      - ansible_vol:/var/ans
+    - ansible_vol:/var/ans
   host:
     links:
-      - base
-      - master
+    - master
     build: ./host/
     image: ansible_host
     container_name: host01
@@ -25,10 +21,11 @@ services:
       - 80
     command: ["/var/run.sh"]
     volumes:
-     - ansible_vol:/var/ans
+      - ansible_vol:/var/ans
   host02:
+    depends_on:
+      - master
     links:
-      - base
       - master
       - host
     image: ansible_host
@@ -38,10 +35,11 @@ services:
       - 80
     command: ["/var/run.sh"]
     volumes:
-     - ansible_vol:/var/ans
+      - ansible_vol:/var/ans
   host03:
+    depends_on:
+      - master
     links:
-      - base
       - master
       - host
     image: ansible_host
@@ -51,10 +49,11 @@ services:
       - 80
     command: ["/var/run.sh"]
     volumes:
-     - ansible_vol:/var/ans
+      - ansible_vol:/var/ans
   host04:
+    depends_on:
+      - master
     links:
-      - base
       - master
       - host
     image: ansible_host
@@ -64,10 +63,11 @@ services:
       - 80
     command: ["/var/run.sh"]
     volumes:
-     - ansible_vol:/var/ans
+      - ansible_vol:/var/ans
   host05:
+    depends_on:
+      - master
     links:
-      - base
       - master
       - host
     image: ansible_host
@@ -77,6 +77,6 @@ services:
       - 80
     command: ["/var/run.sh"]
     volumes:
-     - ansible_vol:/var/ans
+      - ansible_vol:/var/ans
 volumes:
   ansible_vol:

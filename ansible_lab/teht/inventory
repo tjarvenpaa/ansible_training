@@ -1,0 +1,9 @@
+[web]
+host0[1:2] ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key
+[db]
+host03 ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key
+[nginx]
+host0[4:5] ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key
+[apache]
+host02 ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key
+host04 ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key

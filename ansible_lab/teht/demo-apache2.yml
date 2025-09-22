@@ -1,0 +1,56 @@
+---
+- hosts: apache # määritellään kohde koneet / palvelimet
+  vars_files:
+    - vars/default.yml # määritellään muuttujat
+  # become: true
+
+  tasks: # muodostetaan tehtävät
+    - name: asennetaan apache2  # käytetään paketinhallintan asentamaan apache2 palvelu
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+    
+    - name: käynnistetään apache2 # määritellään palvelu käyntiin ja käynnistetään koneen käynnistyessä
+      service:
+        name: apache2
+        state: started
+        enabled: yes # käynnistetään koneen käynnistyessä
+    
+    - name: luo webroot # luodaan webroot hakemisto
+      file:
+        path: "/var/www/{{ http_host }}"
+        state: directory
+        owner: "{{ app_user }}" # omistajana apache käyttäjä
+        mode: '0755'
+    
+    - name: kopioidaan index template # webbisivujen index template kopioidaan webroot hakemistoon
+      template:
+        src: templates/index.html.j2
+        dest: "/var/www/{{ http_host }}/index.html"
+
+    - name: luodaan uusi virtualhost # luodaan apachen virtualhost tiedosto, määritellään uusi webroot hakemisto ja http_host
+      template:
+        src: templates/apache.conf.j2
+        dest: "/etc/apache2/sites-available/{{ http_conf }}"
+      notify: restart apache2 # uudelleen käynnnistetään apache2 palvelu, jotta uusi virtualhost otetaan käyttöön
+    
+    - name: otetaan uusi virtualhost käyttöön 
+      command: a2ensite {{ http_conf }} # virtuaalihostin käyttöön otto apachelle 
+      notify: restart apache2
+    
+    - name: poistetaan default virtualhost # default virtulhosti pois 
+      shell: /usr/sbin/a2dissite 000-default.conf
+      #command: a2dissite 000-default.conf
+      when: disable_default
+      notify: reload apache2 # kutsutaan uudelleen lataus apache2 palvelulle
+  
+  handlers: # kutsujen muuttujat
+    - name: restart apache2
+      service:
+        name: apache2
+        state: restarted
+    - name: reload apache2
+      service:
+        name: apache2
+        state: reloaded 

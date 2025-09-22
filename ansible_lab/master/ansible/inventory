@@ -1,6 +1,6 @@
 [web]
-host0[1:2] ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key
+host0[1:2] ansible_user=root 
 [db]
-host03 ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key
+host03 ansible_user=root 
 [nginx]
-host0[4:5] ansible_user=root ansible_ssh_private_key_file=/var/ans/master_key
+host0[4:5] ansible_user=root 

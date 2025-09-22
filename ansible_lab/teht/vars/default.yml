@@ -1,0 +1,6 @@
+---
+app_user: "www-data"
+http_host: "localhost"
+http_conf: "omasite.conf"
+http_port: "80"
+disable_default: true
